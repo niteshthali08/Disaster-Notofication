@@ -5,7 +5,7 @@ from tweepy import OAuthHandler
 from tweepy import TweepError, cursor
 from nltk.corpus import stopwords
 import wikipedia
-
+# reads tweets
 
 client = None
 debug = 1
