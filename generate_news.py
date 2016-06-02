@@ -22,7 +22,7 @@ class GenerateNews:
         console_log('URL: ', url)
         console_log('headline: ', self.r_news_article.headline)
 
-        self.r_news_article.add_creator("@" + tw.screen_name, tw.description, tw.profile_image_url, url, tw.urls,
+        self.r_news_article.add_creator(tw.screen_name, tw.description, tw.profile_image_url, url, tw.urls,
                                         tw.author_name, additional_name = None, family_name = None, address = None,
                                         honorific_prefix = None, honorific_suffix = None)
         console_log(self.r_news_article)
@@ -136,14 +136,14 @@ class GenerateNews:
                         elif type == 'Place':
                             point = graph.get(None, URIRef("http://www.georss.org/georss/point"), None, None);
                             self.r_news_article.add_place('about', graph.uri, name, description, image[0][2],
-                                                           url[0][2], additional_info_Uri=None,
+                                                           url[0][2], additional_info_Uri=None, address = None,
                                                             geo_coordinates = point, feature_code=None)
                         elif type == 'Organization':
-                            self.rNewsArticle.addOrganization('about', graph.uri,  name, description, image[0][2],
-                                                           url[0][2], additional_info_Uri=None, tickerSymbol = None,
+                            self.r_news_article.add_organization('about', graph.uri,  name, description, image[0][2],
+                                                           url[0][2], additional_info_Uri=None, ticker_symbol = None,
                                                               address = None)
                         else:
-                            self.rNewsArticle.addOrganization('about', graph.uri, name, description, image[0][2],
+                            self.r_news_article.add_concept('about', graph.uri, name, description, image[0][2],
                                                               url[0][2], additional_info_Uri=None)
 
 

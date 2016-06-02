@@ -35,29 +35,17 @@ class NewsItem:
         console_log()
         self.subject_URI = str(identifier)
 
-    def add_creator(self, target, uri = None, name = None,description = None, image = None, url = None,
+    def add_creator(self, name = None, description = None, image = None, url = None,
                  additional_info_Uri = None, given_name = None, additional_name = None, family_name = None,
                  address = None, honorific_prefix = None, honorific_suffix = None ):
 
-        self.creator = Person (uri, name,description, image, url,additional_info_Uri, given_name, additional_name,
+        self.creator = Person (url, name, description, image, url, additional_info_Uri, given_name, additional_name,
                          family_name, address, honorific_prefix, honorific_suffix )
 
     def add_person(self, target, uri = None, name = None,description = None, image = None, url = None,
                  additional_info_Uri = None, given_name = None, additional_name = None, family_name = None,
                  address = None, honorific_prefix = None, honorific_suffix = None):
-        console_log('target:', target)
-        console_log('uri:', uri)
-        console_log('name:', name)
-        console_log('description:', description)
-        console_log('image:', image)
-        console_log('url:', url)
-        console_log('additional_info_uri:', additional_info_Uri)
-        console_log('given_name:', given_name)
-        console_log('additional_name:', additional_name)
-        console_log('family_name:', family_name)
-        console_log('address:', address)
-        console_log('honorific_prefix:', honorific_prefix)
-        console_log('honorific_suffix', honorific_suffix)
+
 
         person = Person (uri, name,description, image, url,additional_info_Uri, given_name, additional_name,
                          family_name, address, honorific_prefix, honorific_suffix )
@@ -127,9 +115,33 @@ class NewsItem:
         if self.location != None:
             graph.add((URIRef(rNews[self.subject_URI]), URIRef(rNews.dateline), Literal(self.location)))
 
-        # if self.creator != None:
-        #     Rcreator =  objEasyRDF->resource($this->creator->subjectURI, "rNews:person");
-        #     this->creator->save($Rcreator);
-        #     bjEasyRDF->addResource($this->subjectURI, "rNews:creator", $Rcreator);
+        if self.creator != None:
+            #Rcreator =  ->resource($this->creator->subjectURI, "rNews:person");
+            self.creator.save(rNews, graph, "person")
+            graph.add((rNews[self.subject_URI], URIRef(rNews.creator), URIRef(rNews.person)))
+
+        for obj in self.about:
+            type = obj.get_type()
+            if type == 'concept':
+                console_log('**** Found a Concept, adding to the Graph **** ')
+                obj.save(rNews, graph, "concept")
+                graph.add((rNews[self.subject_URI], URIRef(rNews.about), URIRef(rNews.concept)))
+
+            elif type == 'person':
+                console_log('**** Found a Person, adding to the Graph **** ')
+                obj.save(rNews, graph, "person")
+                graph.add((rNews[self.subject_URI], URIRef(rNews.about), URIRef(rNews.person)))
+
+            elif type == 'place':
+                console_log('**** Found a Place, adding to the Graph **** ')
+                obj.save(rNews, graph, "place")
+                graph.add((rNews[self.subject_URI], URIRef(rNews.about), URIRef(rNews.place)))
+
+            elif type == 'organization':
+                console_log('**** Found a Organization, adding to the Graph **** ')
+                obj.save(rNews, graph, "organization")
+                graph.add((rNews[self.subject_URI], URIRef(rNews.about), URIRef(rNews.organization)))
+
+
 
         console_log('Serializing', graph.serialize(format="nt"))

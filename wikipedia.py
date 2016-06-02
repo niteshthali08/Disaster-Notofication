@@ -25,7 +25,12 @@ def get_wikipedia_urls(url, dest_url, bi_grams):
     wiki_url_terms = []
     flag = False
     for bi_gram in bi_grams:
+        if not flag:
             wiki_term = get_title(url + bi_gram)
             if wiki_term != None:
                 wiki_url_terms.append([bi_gram, wiki_term])
+                flag = True
+                continue;
+
+        flag = False
     return wiki_url_terms

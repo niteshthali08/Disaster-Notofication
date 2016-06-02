@@ -44,7 +44,8 @@ if __name__ == '__main__':
     dest_url = "https://en.wikipedia.org/wiki/"
     tw = Tweeter()
     tw.get_one_tweet()
-    tw.text = "Barak Obama" # hardcoding for time being
+    #tw.text = "Barak Obama in America at Arizona State University" # hardcoding for time being
+    tw.text = "Venezuela blackout stops subway causes traffic jams and interrupts presidential broadcast"
     # for now hard code one tweet and proceed
     word_list = remove_stop_words(word_tokenize(tw.text))
     console_log(word_list)

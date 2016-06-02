@@ -99,9 +99,9 @@ if __name__ == '__main__':
            "urls": [],
            "location": "USA, AZ",
            "author_name": "Nitesh Thali",
-           "media": "some_url",
+           "media": "https://pbs.twimg.com/profile_images/438552129699971072/gMBMUfUw.jpeg",
             "screen_name": "@Nitesh_Thali",
-            "description": "",
+            "description": "I am cool",
             "profile_image_url": "https://pbs.twimg.com/profile_images/438552129699971072/gMBMUfUw.jpeg"
     }
     l.coll.save(obj)
